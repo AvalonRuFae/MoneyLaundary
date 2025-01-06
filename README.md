@@ -1,2 +1,2 @@
 # MoneyLaundary
-Hello fuckers this is my first program
+Hello this is my first program
