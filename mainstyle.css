@@ -1,0 +1,182 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.balance {
+    margin-left: -300px;
+    margin-top: 20px;
+    font-size: 2em;
+    color: #333;
+}
+.container {
+    width: 80%;
+    max-width: 600px;
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.history {
+    margin-bottom: 20px;
+}
+.history-item {
+    margin-top: 1000px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.input-field {
+    display: flex;
+    flex-direction: column;
+}
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.input-row input, .input-row select, .input-row button {
+    padding: 10px;
+    font-size: 1em;
+}
+.input-row button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+.input-row button:hover {
+    background-color: #218838;
+}
+.options {
+    display: none; /* Hide options by default */
+}
+.options.expense, .options.income {
+    margin-top: 10px;
+}
+.options.show {
+    display: block; /* Show options when the 'show' class is added */
+}
+.options ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+.options li {
+    padding: 10px; /* Add padding to list items */
+    background-color: #f4f4f4; /* Background color for list items */
+    margin-bottom: 5px; /* Space between list items */
+    border: 1px solid #ddd; /* Border for list items */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+.options li:hover {
+    background-color: #e0e0e0; /* Change background color on hover */
+}
+.options input[type="text"] {
+    width: calc(100% - 60px); /* Adjust width to fit with the button */
+    padding: 10px; /* Add padding */
+    margin-right: 5px; /* Space between input and button */
+}
+.options button {
+    padding: 10px; /* Add padding */
+    background-color: #28a745; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none; /* Remove border */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+.options button:hover {
+    background-color: #218838; /* Change background color on hover */
+}
+
+/* Container for the switch */
+.switch {
+    top:5px;
+    position: relative; /* Position relative to its normal position */
+    display: inline-block; /* Display as an inline-block element */
+    width: 60px; /* Width of the switch */
+    height: 34px; /* Height of the switch */
+}
+
+/* Hide the default checkbox */
+.switch input {
+    opacity: 0; /* Make the checkbox invisible */
+    width: 0; /* Set width to 0 */
+    height: 0; /* Set height to 0 */
+}
+
+/* The slider */
+.slider {
+    position: absolute; /* Position absolutely within the switch container */
+    cursor: pointer; /* Change cursor to pointer when hovering */
+    top: 0; /* Position at the top */
+    left: 0; /* Position at the left */
+    right: 0; /* Position at the right */
+    bottom: 0; /* Position at the bottom */
+    background-color: red; /* Initial background color */
+    transition: .4s; /* Smooth transition for background and transform */
+    border-radius: 34px; /* Rounded corners */
+}
+
+/* The circle inside the slider */
+.slider:before {
+    position: absolute; /* Position absolutely within the slider */
+    content: ""; /* No content */
+    height: 26px; /* Height of the circle */
+    width: 26px; /* Width of the circle */
+    left: 4px; /* Position 4px from the left */
+    bottom: 4px; /* Position 4px from the bottom */
+    background-color: white; /* Background color of the circle */
+    transition: .4s; /* Smooth transition for transform */
+    border-radius: 50%; /* Make the circle round */
+}
+
+/* Change background color when checked */
+input:checked + .slider {
+    background-color: green; /* Background color when checked */
+}
+
+/* Move the circle to the right when checked */
+input:checked + .slider:before {
+    transform: translateX(26px); /* Move the circle 26px to the right */
+}
+
+/* The symbol inside the slider */
+.slider:after {
+    content: '-'; /* Default content is '-' */
+    color: black; /* Color of the symbol */
+    display: block; /* Display as a block element */
+    position: absolute; /* Position absolutely within the slider */
+    transform: translate(10%, -55%); /* Center the symbol */
+    top: 50%; /* Position at the vertical center */
+    left: 20%; /* Position at 20% from the left */
+    font-size: 20px; /* Font size of the symbol */
+}
+
+/* Change the symbol when checked */
+input:checked + .slider:after {
+    content: '+'; /* Content is '+' when checked */
+    left: 62%; /* Position at 80% from the left */
+    top: 50%;
+}
+
+.delete-mode .delete-button {
+    display: inline-block; /* Show delete buttons in delete mode */
+}
+
+.delete-button {
+    display: none; /* Hide delete buttons by default */
+    margin-left: 10px; /* Space between the field and the delete button */
+    background-color: red; /* Background color for delete button */
+    color: white; /* Text color for delete button */
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.delete-button:hover {
+    background-color: darkred; /* Darker background on hover */
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="mainstyle.css">
+</head>
+<body>
+    <div class="balance">Balance: HKD 0.00</div>
+    <div class="container">
+        <div class="history">
+            <div class="history-item">
+                <span>Initial Balance</span>
+                <span>HKD 0.00</span>
+            </div>
+        </div>
+        <div class="input-field">
+            <div class="input-row">
+                <label class="switch">
+                    <input type="checkbox" id="typeSwitch">
+                    <span class="slider"></span>
+                </label>
+                <input type="number" id="amount" placeholder="Amount in HKD">
+                <button id="confirmButton">Confirm</button>
+                <button id="deleteButton">Delete</button>
+            </div>
+            <div class="options expense">
+                <ul id="expenseList">
+                    <li>Entertainment</li>
+                    <li>Transport</li>
+                    <a>
+                        <input type="text" id="newExpense" placeholder="Add new expense">
+                        <button id="addExpenseButton">Add</button>
+                    </a>
+                </ul>
+            </div>
+            <div class="options income">
+                <ul id="incomeList">
+                    <li>Jobs</li>
+                    <li>Bank</li>
+                    <a>
+                        <input type="text" id="newIncome" placeholder="Add new income">
+                        <button id="addIncomeButton">Add</button>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
