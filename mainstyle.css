@@ -6,12 +6,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden; /* Prevent both horizontal and vertical overflow */
 }
 .balance {
-    margin-left: -300px;
+    margin-left: 0; /* Adjust margin to fit within the window */
     margin-top: 20px;
     font-size: 2em;
     color: #333;
+    text-align: center; /* Center align the balance text */
 }
 .container {
     width: 80%;
@@ -20,12 +22,14 @@ body {
     padding: 20px;
     margin: 20px 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 100vh; /* Set container height to full viewport height */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
 }
 .history {
     margin-bottom: 20px;
 }
 .history-item {
-    margin-top: 1000px;
+    margin-top: 20px; /* Adjust margin to fit within the window */
     display: flex;
     justify-content: space-between;
     padding: 10px;
