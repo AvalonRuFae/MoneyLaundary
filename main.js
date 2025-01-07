@@ -114,3 +114,11 @@ document.getElementById('deleteButton').addEventListener('click', function() {
     
     
 });
+
+// Add an event listener to the amount input field to ensure only numbers can be inputted
+document.getElementById('amount').addEventListener('keypress', function(event) {
+    // Allow only numbers and decimal points
+    if (!/[0-9.]/.test(event.key)) {
+        event.preventDefault();
+    }
+});
