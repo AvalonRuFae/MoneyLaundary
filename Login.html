@@ -11,12 +11,17 @@
     <!-- Container for the login form -->
     <div class="login-container">
         <h2>Login</h2>
+        <form id="loginn">
         <!-- Login form -->
         <form action="/login" method="post">
             <!-- Input field for username -->
+
             <input type="text" name="username" placeholder="Username" required>
             <!-- Input field for password -->
             <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" class="login">Login</button>
+            <button type="click" id="signup" class="sign-up">Don't have an account?    Sign up now</button>
+
             <!-- Submit button for the form -->
             <button type="submit">Login</button>
         </form>

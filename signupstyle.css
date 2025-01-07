@@ -8,30 +8,36 @@ body {
     background-color: #f0f0f0; /* Light gray background color */
 }
 
-/* Styling for the login container */
-.login-container {
+/* Styling for the signup container */
+.signup-container {
     background-color: #fff; /* White background color */
     padding: 20px; /* Padding inside the container */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for 3D effect */
+    width: 300px; /* Fixed width */
+    display: flex; /* Uses Flexbox layout */
+    flex-direction: column; /* Aligns children vertically */
+    align-items: center; /* Centers children horizontally */
 }
 
-/* Styling for the heading inside the login container */
-.login-container h2 {
+/* Styling for the heading inside the signup container */
+.signup-container h2 {
     margin-bottom: 20px; /* Space below the heading */
+    text-align: center; /* Center the heading */
 }
 
-/* Styling for the input fields inside the login container */
-.login-container input {
-    width: 97.75%; /* Full width of the container */
+/* Styling for the input fields inside the signup container */
+.signup-container input {
+    width: 100%; /* Full width of the container */
     padding: 10px; /* Padding inside the input fields */
-    margin: 10px auto; /* Space around the input fields and centers them */
+    margin: 10px 0; /* Space around the input fields */
     border: 1px solid #ccc; /* Light gray border */
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 4px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-/* Styling for the button inside the login container */
-.login {
+/* Styling for the button inside the signup container */
+.signup {
     width: 100%; /* Full width of the container */
     padding: 10px; /* Padding inside the button */
     background-color: #007BFF; /* Blue background color */
@@ -39,17 +45,9 @@ body {
     border-radius: 4px; /* Rounded corners */
     color: #fff; /* White text color */
     font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
 }
 
-.sign-up {
-    margin-top: 20px;
-    margin-left:25%;
-    border: none; /* No border */
-    background-color: #fff; /* White background color */
-    align: center;
-    opacity: 0.3;
-}
-
-.sign-up:hover {
-    opacity: 0.6;
+.signup:hover {
+    background-color: #0056b3; /* Darker blue on hover */
 }

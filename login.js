@@ -22,3 +22,25 @@ function resizeContainer() {
 
 // Initial call to set the container size on page load
 resizeContainer();
+
+document.getElementById("loginn").addEventListener('submit', function(event) {
+    event.preventDefault();
+    //for demonstration only, wait for the database implementation!!!!!
+    const username = document.getElementsByName("username").value.trim();
+    const password = document.getElementsByName("password").value.trim();
+    alert("Username: " + username + " Password: " + password);
+    window.location = "main.html";
+
+    
+    
+
+});
+
+document.getElementById("signup").addEventListener("click", function(event) {
+    window.location = "signup.html";
+
+    
+    event.preventDefault();
+
+});
+
