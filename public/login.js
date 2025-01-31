@@ -37,7 +37,7 @@ document.getElementById("loginn").addEventListener('submit', function(event) {
 });
 
 document.getElementById("signup").addEventListener("click", function(event) {
-    window.location = "signup.html";
+    window.location = "signup";
 
     
     event.preventDefault();
