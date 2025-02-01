@@ -8,7 +8,7 @@ const app = express();
 
 const dbURI = "mongodb+srv://tester:test1234@nodetuts.9c7sz.mongodb.net/MoneyLaundary?retryWrites=true&w=majority&appName=nodetuts";
 
-mongoose.connect(dbURI  , { useNewUrlParser: true, useUnifiedTopology: true }) 
+mongoose.connect(dbURI) 
     .then((result) => app.listen(3000))
     .catch((err) => console.log(err));
 
@@ -80,7 +80,10 @@ app.get('/:id/main', (req, res) => {
         })
         .catch((err) => {
             console.log(err);
-            res.redirect('/login');
+            res.status(404).redirect('/login');
         })
 })
 
+app.use((req, res) => {
+    res.render('login');
+})
