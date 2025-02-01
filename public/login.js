@@ -26,14 +26,30 @@ resizeContainer();
 document.getElementById("loginn").addEventListener('submit', function(event) {
     event.preventDefault();
     //for demonstration only, wait for the database implementation!!!!!
-    const username = document.getElementsByName("username").value.trim();
-    const password = document.getElementsByName("password").value.trim();
-    alert("Username: " + username + " Password: " + password);
-    window.location = "main.html";
-
+    const username = document.getElementsByName("username")[0].value.trim();
+    const password = document.getElementsByName("password")[0].value.trim();
+    console.log(username, password);
     
-    
-
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.redirectUrl) {
+            window.location.href = data.redirectUrl; // Handle the redirect manually
+        } else {
+            alert(data.message);
+            document.getElementsByName("password")[0].value = ''; // Clear the password field
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Login failed');
+    });
 });
 
 document.getElementById("signup").addEventListener("click", function(event) {

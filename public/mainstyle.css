@@ -184,3 +184,9 @@ input:checked + .slider:after {
 .delete-button:hover {
     background-color: darkred; /* Darker background on hover */
 }
+
+.username {
+    color: #007bff; /* Blue color for the username */
+    font-weight: bold; /* Bold font weight */
+    font-size: 1.2em; /* Larger font size */
+}

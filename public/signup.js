@@ -1,6 +1,8 @@
 document.getElementById('signupForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent the form from submitting the traditional way
 
+    console.log('Form submitted'); // Log a message to the console
+
     // Get form values
     const username = document.getElementById('username').value.trim();
     const email = document.getElementById('email').value.trim();
@@ -13,11 +15,13 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
     // Validate form values
     if (password !== confirmPassword) {
         alert('Passwords do not match');
+         document.getElementById('password').value = '';
+        document.getElementById('confirmPassword').value = '';
         return;
     }
 
     // Create a user object
-    const user = {
+    const signUpUser = {
         username,
         email,
         password,
@@ -27,8 +31,23 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
     };
 
     // Log the user object to the console (you can replace this with an API call)
-    console.log('User signed up:', user);
-
-    // Clear the form
-    document.getElementById('signupForm').reset();
+    fetch('/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Specify that the request body is JSON
+        },
+        body: JSON.stringify(signUpUser) // Convert the user object to a JSON string
+    })
+    .then(response => {
+        alert('Sign up successful');
+        document.getElementById('signupForm').reset();
+        if (response.redirected) {
+            window.location.href = response.url; // Handle the redirect manually
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Sign up failed');
+    });
 });
+

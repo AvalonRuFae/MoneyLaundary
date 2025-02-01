@@ -39,15 +39,19 @@ body {
     border-radius: 4px; /* Rounded corners */
     color: #fff; /* White text color */
     font-size: 16px; /* Font size */
+    cursor: pointer;
 }
 
 .sign-up {
-    margin-top: 20px;
-    margin-left:25%;
-    border: none; /* No border */
+    width: 100%; /* Set the width of the button */
+    padding: 10px; /* Padding inside the button */
     background-color: #fff; /* White background color */
-    align: center;
-    opacity: 0.3;
+    border: none; /* No border */
+    color: #007BFF; /* Blue text color */
+    font-size: 14px; /* Font size */
+    text-align: center; /* Center the text inside the button */
+    opacity: 0.5; /* Set initial opacity */
+    cursor: pointer; /* Change cursor to pointer on hover */
 }
 
 .sign-up:hover {
