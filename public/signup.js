@@ -38,11 +38,19 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
         },
         body: JSON.stringify(signUpUser) // Convert the user object to a JSON string
     })
-    .then(response => {
-        alert('Sign up successful');
-        document.getElementById('signupForm').reset();
-        if (response.redirected) {
-            window.location.href = response.url; // Handle the redirect manually
+    .then(response => response.json().then(data => ({status: response.status, body: data})))
+    .then(result => {
+        alert(result.body.message);
+        if (result.status === 200) {
+            document.getElementById('signupForm').reset();
+        }else if (result.status === 401){
+            document.getElementById('username').value = '';
+            document.getElementById('email').value = '';
+        }else{
+            document.getElementById('signupForm').reset();
+        }
+        if (result.body.redirectUrl) {
+            window.location.href = result.body.redirectUrl;
         }
     })
     .catch((error) => {

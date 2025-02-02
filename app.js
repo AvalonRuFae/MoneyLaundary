@@ -39,13 +39,32 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', (req, res) => {
     const userInfo = new UserInfo(req.body);
-    userInfo.save()
+
+    UserInfo.find({username: userInfo.username})
         .then((result) => {
-            console.log(result);
-            res.redirect('/login');
+            if(result.length > 0){
+                res.status(401).json({message: 'Username already exists'});
+            }else{
+                UserInfo.find({email: userInfo.email})
+                    .then((result) => {
+                        if(result.length > 0){
+                            res.status(401).json({message: 'Email already exists'});
+                        }else{
+                            userInfo.save()
+                                .then((result) => {
+                                    console.log(result);
+                                    res.status(200).json({redirectUrl: '/login', message: 'User created successfully'});
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                })
+                        }
+                    })
+            }
         })
         .catch((err) => {
             console.log(err);
+            res.status(500).json({message: 'Internal Server Error'});
         })
 })
 
@@ -56,9 +75,16 @@ app.post('/login', (req, res) => {
     UserInfo.find({username: username, password: password})
         .then((result) => {
             if(result.length > 0){
-                res.status(200).json({ redirectUrl: `/${result[0]._id}/main` });
+                res.status(200).json({ redirectUrl: `/main/${result[0]._id}` });
             } else {
-                res.status(401).json({message: 'Username or password is incorrect'});
+                UserInfo.find({email: username, password: password})
+                    .then((result) => {
+                        if (result.length > 0){
+                            res.status(200).json({redirectUrl: `/main/${result[0]._id}`});
+                        }else{
+                            res.status(401).json({message: 'Username or password is incorect'});
+                        }
+                    })
             }
         })
         .catch((err) => {
@@ -67,7 +93,7 @@ app.post('/login', (req, res) => {
         })
 })
 
-app.get('/:id/main', (req, res) => {
+app.get('/main/:id', (req, res) => {
     const id = req.params.id;
     UserInfo.findById(id)
         .then((result) => {

@@ -14,11 +14,19 @@ const userInfoSchema = new Schema({
         type : String,
         required : true,
     },
-    items:{
+    incomes:{
         type : Array,
         required : false,
     },
-    balance:{
+    income_values:{
+        type : Array,
+        required : false,
+    },
+    outcomes:{
+        type : Array,
+        required : false,
+    },
+    outcome_values:{
         type : Array,
         required : false,
     },
