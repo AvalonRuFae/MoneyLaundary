@@ -22,11 +22,11 @@ const userInfoSchema = new Schema({
         type : Array,
         required : false,
     },
-    outcomes:{
+    expenses:{
         type : Array,
         required : false,
     },
-    outcome_values:{
+    expense_values:{
         type : Array,
         required : false,
     },

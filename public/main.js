@@ -27,30 +27,50 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('addExpenseButton').addEventListener('click', function() {
     // Get the value of the new expense input field and trim any whitespace
     const newExpense = document.getElementById('newExpense').value.trim();
+    const userId = document.getElementById('userId').value.trim();
     // Check if the input field is not empty
     if (newExpense) {
-        // Create a new list item element
-        const li = document.createElement('li');
-        // Set the text content of the list item to the new expense value
-        li.textContent = newExpense;
-        // Insert the new list item before the parent element (input field and button)
-        document.getElementById('expenseList').insertBefore(li, this.parentElement);
-        // Clear the input field
-        document.getElementById('newExpense').value = '';
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = '-';
-        deleteButton.classList.add('delete-button');
+        fetch('/addExpense', {
+            method : 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify({userId, newExpense})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'success'){
+                // Create a new list item element
+                const li = document.createElement('li');
+                // Set the text content of the list item to the new expense value
+                li.textContent = newExpense;
+                // Insert the new list item before the parent element (input field and button)
+                document.getElementById('expenseList').insertBefore(li, this.parentElement);
+                // Clear the input field
+                document.getElementById('newExpense').value = '';
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = '-';
+                deleteButton.classList.add('delete-button');
         
-        // Add an event listener to the delete button
-        deleteButton.addEventListener('click', function() {
-            // Remove the list item
-            li.remove();
-            // Exit delete mode
-            document.body.classList.remove('delete-mode');
-        });
+                // Add an event listener to the delete button
+                deleteButton.addEventListener('click', function() {
+                    // Remove the list item
+                    li.remove();
+                    // Exit delete mode
+                    document.body.classList.remove('delete-mode');
+                });
         
-        // Append the delete button to the list item
-        li.appendChild(deleteButton);
+                // Append the delete button to the list item
+                li.appendChild(deleteButton);
+            }else{
+                alert(data.message);
+                document.getElementById('newExpense').value = '';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Expense adding failed');
+        })
     }
 });
 
@@ -58,30 +78,51 @@ document.getElementById('addExpenseButton').addEventListener('click', function()
 document.getElementById('addIncomeButton').addEventListener('click', function() {
     // Get the value of the new income input field and trim any whitespace
     const newIncome = document.getElementById('newIncome').value.trim();
+    const userId = document.getElementById('userId').value.trim();
+
     // Check if the input field is not empty
     if (newIncome) {
-        // Create a new list item element
-        const li = document.createElement('li');
-        // Set the text content of the list item to the new income value
-        li.textContent = newIncome;
-        // Insert the new list item before the parent element (input field and button)
-        document.getElementById('incomeList').insertBefore(li, this.parentElement);
-        // Clear the input field
-        document.getElementById('newIncome').value = '';
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = '-';
-        deleteButton.classList.add('delete-button');
+        fetch('/addIncome', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({userId, newIncome})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'success'){
+                // Create a new list item element
+                const li = document.createElement('li');
+                // Set the text content of the list item to the new income value
+                li.textContent = newIncome;
+                // Insert the new list item before the parent element (input field and button)
+                document.getElementById('incomeList').insertBefore(li, this.parentElement);
+                // Clear the input field
+                document.getElementById('newIncome').value = '';
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = '-';
+                deleteButton.classList.add('delete-button');
         
-        // Add an event listener to the delete button
-        deleteButton.addEventListener('click', function() {
-            // Remove the list item
-            li.remove();
-            // Exit delete mode
-            document.body.classList.remove('delete-mode');
-        });
+                // Add an event listener to the delete button
+                deleteButton.addEventListener('click', function() {
+                    // Remove the list item
+                    li.remove();
+                    // Exit delete mode
+                    document.body.classList.remove('delete-mode');
+                });
         
-        // Append the delete button to the list item
-        li.appendChild(deleteButton);
+                // Append the delete button to the list item
+                li.appendChild(deleteButton);
+            }else{
+                alert(data.message);
+                document.getElementById('newIncome').value = '';
+            }
+        })
+        .catch(error =>{
+            console.error('Error:', error);
+            alert('Income adding failed');
+        })
     }
 });
 const listItems = document.querySelectorAll('.options li');
