@@ -163,3 +163,11 @@ document.getElementById('amount').addEventListener('keypress', function(event) {
         event.preventDefault();
     }
 });
+
+document.getElementById('logoutButton').addEventListener('click', function() {
+    fetch('/logout', {
+        method: 'GET', 
+        headers: {'Content-Type': 'application/json'}
+    })
+    location.assign('/login');
+});

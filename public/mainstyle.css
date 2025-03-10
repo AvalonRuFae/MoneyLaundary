@@ -186,7 +186,24 @@ input:checked + .slider:after {
 }
 
 .username {
-    color: #007bff; /* Blue color for the username */
+    color: #000000; /* Blue color for the username */
     font-weight: bold; /* Bold font weight */
     font-size: 1.2em; /* Larger font size */
+}
+
+.header {
+    position: relative; /* Ensure the header is positioned relative */
+}
+#logoutButton {
+    position: absolute; /* Position the button absolutely within the header */
+    top: 10px; /* 10px from the top */
+    left: 20px; /* 0 from the left to be as left as it can */
+    background-color: #dc3545; /* Red background color */
+    color: rgb(255, 255, 255); /* White text color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Padding for the button */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+#logoutButton:hover {
+    background-color: #c82333; /* Darker red on hover */
 }

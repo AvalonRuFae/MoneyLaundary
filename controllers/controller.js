@@ -90,10 +90,15 @@ const main_get = (req, res) => {
         })
 };
 
+const logout_get = (req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 });
+}
+
 module.exports = {
     signup_get,
     login_get,
     signup_post,
     login_post,
-    main_get
+    main_get, 
+    logout_get
 };
