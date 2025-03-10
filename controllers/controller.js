@@ -92,6 +92,7 @@ const main_get = (req, res) => {
 
 const logout_get = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });
+    res.status(200).json({ message: 'Logged out successfully' });
 }
 
 module.exports = {
