@@ -22,6 +22,15 @@ const handleErrors = (err) => {
         errors.password = 'Password is incorrect';
     }
 
+    //duplicate username or email error
+    if (err.code === 11000){
+        if (err.keyPattern.username){
+            errors.username = 'That username is already registered';
+        }
+        if (err.keyPattern.email){
+            errors.email = 'That email is already registered';
+        }
+    }
     return errors;
 }
 
@@ -33,7 +42,19 @@ const login_get = (req, res) => {
     res.render('login');
 }
 
-const signup_post = (req, res) => {
+const signup_post = async (req, res) => {
+    const {username, email, password} = req.body;
+
+    try {
+        const user = await UserInfo.create({username, email, password});
+        const token = createToken(user._id);
+        res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000});
+        res.status(201).json({user: user._id});
+    }
+    catch (err) {
+        const errors = handleErrors(err);
+        res.status(400).json({ errors });
+    }
 };
 
 const login_post = async (req, res) => {
