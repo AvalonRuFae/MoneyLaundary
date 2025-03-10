@@ -28,7 +28,7 @@ document.getElementById("loginn").addEventListener('submit', async function(even
     
     const userNameOrEmail = document.getElementsByName("username")[0].value.trim();
     const password = document.getElementsByName("password")[0].value.trim();
-    console.log(username, password);
+    console.log(userNameOrEmail, password);
     
     try{
         const res = await fetch('/login', {
@@ -39,7 +39,14 @@ document.getElementById("loginn").addEventListener('submit', async function(even
         const data = await res.json();
         console.log(data);
         if (data.errors){
-            alert(data.errors.msg);
+            if (data.errors.userNameOrEmail){
+                alert(data.errors.userNameOrEmail);
+                document.getElementsByName("username")[0].value = '';
+            }
+            if (data.errors.password){
+                alert(data.errors.password);
+                document.getElementsByName("password")[0].value = '';
+            }
         }
         if (data.user){
             location.assign('/main');

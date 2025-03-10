@@ -10,16 +10,16 @@ const createToken = (id) => {
 
 const handleErrors = (err) => {
     console.log(err.message, err.code);
-    let errors = {msg: ''};
+    let errors = {userNameOrEmail: '', username: '', email: '', password: ''};
 
     //incorrect username or email
     if (err.message === 'Incorrect username or email'){
-        errors.msg = 'User does not exist';
+        errors.userNameOrEmail = 'User does not exist';
     }
 
     //incorrect password
     if (err.message === 'Incorrect password'){
-        errors.msg = 'Password is incorrect';
+        errors.password = 'Password is incorrect';
     }
 
     return errors;
@@ -46,7 +46,7 @@ const login_post = async (req, res) => {
         res.status(200).json({user: user._id});
     }
     catch(err){
-        const error = handleErrors(err);
+        const errors = handleErrors(err);
         res.status(400).json({ errors });
     }
 };

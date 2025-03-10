@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 const userInfoSchema = new Schema({
     username:{
+        unique: true,
         type : String,
         required : [true, 'Please enter an username'],
     },
@@ -36,16 +37,16 @@ userInfoSchema.pre('save', async function(next){
 })
 
 userInfoSchema.statics.login = async function(username, email, password){
-    const user = await this.findOne({username});
+    let user = await this.findOne({username});
     if (user){
-        const auth = await bcrypt.conpare(password, user.password);
+        const auth = await bcrypt.compare(password, user.password);
         if (auth){
             return user;
         }
         throw Error('Incorrect password');
     }
     user = await this.findOne({email});
-    if (email){
+    if (user){
         const auth = await bcrypt.compare(password, user.password);
         if (auth){
             return user;
