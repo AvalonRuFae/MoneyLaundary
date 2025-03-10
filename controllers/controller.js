@@ -1,80 +1,54 @@
 const UserInfo = require('../models/UserInfo');
+const jwt = require('jsonwebtoken');
+
+const maxAge = 1 * 24 * 60 * 60;
+const createToken = (id) => {
+    return jwt.sign({id}, 'secret waiting for a good name', {
+        expiresIn : maxAge
+    });
+}
+
+const handleErrors = (err) => {
+    console.log(err.message, err.code);
+    let errors = {msg: ''};
+
+    //incorrect username or email
+    if (err.message === 'Incorrect username or email'){
+        errors.msg = 'User does not exist';
+    }
+
+    //incorrect password
+    if (err.message === 'Incorrect password'){
+        errors.msg = 'Password is incorrect';
+    }
+
+    return errors;
+}
+
+const signup_get = (req, res) => {
+    res.render('signup');
+}
+
+const login_get = (req, res) => {
+    res.render('login');
+}
 
 const signup_post = (req, res) => {
-    const userInfo = new UserInfo(req.body);
-
-    UserInfo.find({username: userInfo.username})
-        .then((result) => {
-            if(result.length > 0){
-                res.status(401).json({message: 'Username already exists'});
-            }else{
-                UserInfo.find({email: userInfo.email})
-                    .then((result) => {
-                        if(result.length > 0){
-                            res.status(401).json({message: 'Email already exists'});
-                        }else{
-                            userInfo.save()
-                                .then((result) => {
-                                    UserInfo.findByIdAndUpdate(
-                                            userInfo._id,
-                                            { $push: {
-                                                incomes: { $each: ['Jobs', 'Bank'] },
-                                                income_values: { $each: [0, 0] },
-                                                expenses: { $each: ['Entertainment', 'Transport'] },
-                                                expense_values: { $each: [0, 0] }
-                                            }},
-                                            {new: true, useFindAndModify: false}
-                                    )
-                                    .then((result) => {
-                                        console.log(result);
-                                        res.status(200).json({redirectUrl: '/login', message: 'User created successfully'});
-                                    })
-                                    .catch((err) => {
-                                        console.log(err);
-                                        res.status(500).json({message: 'Internal Server Error'});
-                                    });
-                                })
-                                .catch((err) => {
-                                    console.log(err);
-                                    res.status(500).json({message: 'Internal Server Error'});
-                                });
-                        }
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        res.status(500).json({message: 'Internal Server Error'});
-                    });
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).json({message: 'Internal Server Error'});
-        });
 };
 
-const login_post = (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    console.log(username, password);
-    UserInfo.find({username: username, password: password})
-        .then((result) => {
-            if(result.length > 0){
-                res.status(200).json({ redirectUrl: `/main/${result[0]._id}` });
-            } else {
-                UserInfo.find({email: username, password: password})
-                    .then((result) => {
-                        if (result.length > 0){
-                            res.status(200).json({redirectUrl: `/main/${result[0]._id}`});
-                        }else{
-                            res.status(401).json({message: 'Username or password is incorect'});
-                        }
-                    })
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).json({message: 'Internal Server Error'});
-        })
+const login_post = async (req, res) => {
+    const {userNameOrEmail, password} = req.body;
+
+    try {
+        const user = await UserInfo.login(userNameOrEmail, userNameOrEmail, password);
+        const token = createToken(user._id);
+        res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000});
+        res.status(200).json({user: user._id});
+    }
+    catch(err){
+        const error = handleErrors(err);
+        res.status(400).json({ errors });
+    }
 };
 
 const main_get = (req, res) => {
@@ -96,6 +70,8 @@ const main_get = (req, res) => {
 };
 
 module.exports = {
+    signup_get,
+    login_get,
     signup_post,
     login_post,
     main_get
