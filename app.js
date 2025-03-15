@@ -1,7 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');   
 const mongoose = require('mongoose');
-const routes = require('./routes/authRoutes');
+const authRoutes = require('./routes/authRoutes');
+const mainRoutes = require('./routes/mainRoutes');
 const UserInfo = require('./models/UserInfo');
 const {requireAuth, getUser} = require('./middleware/authMiddleware');
 const cookieParser = require('cookie-parser');
@@ -33,5 +34,6 @@ app.use((req, res, next) => {
 //routes and controllers
 app.get('*', getUser);
 app.get('/main', requireAuth, (req, res) => {res.render('main');});
-app.use(routes);
+app.use(authRoutes);
+app.use(mainRoutes);
 app.use((req, res) => {res.render('login');});

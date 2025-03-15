@@ -46,7 +46,7 @@ const userInfoSchema = new Schema({
     expenses: [expense],
 }, {timestamps: false});
 
-userInfoSchema.methods.addIncomeOrExpense = function (name, type) {
+userInfoSchema.methods.addIncomeOrExpense = function (type, name) {
     name = name.toLowerCase();
     if (type == 'income'){
         try {
@@ -71,16 +71,78 @@ userInfoSchema.methods.addIncomeOrExpense = function (name, type) {
             return err;
         }
     } 
-    return this;
+    return new Error('Invalid type');
+}
+
+userInfoSchema.methods.deleteIncomeOrExpense = function (type, name) {
+    name = name.toLowerCase();
+    if (type == 'income'){
+        try {
+            this.incomes.forEach(income => {
+                if (income.name == name){
+                    this.incomes.pull(income);
+                    return this;
+                }
+            });
+            throw Error('Income type does not exist');
+        } catch (err) {
+            return err;
+        }
+    }
+    else if (type == 'expense'){
+        try {
+            this.expenses.forEach(expense => {
+                if (expense.name == name){
+                    this.expenses.pull(expense);
+                    return this;
+                }
+            });
+            throw Error('Expense type does not exist');
+        } catch (err) {
+            return err;
+        }
+    }
+    return new Error('Invalid type');
+}
+
+userInfoSchema.methods.updateAmout = function (type, name, amount) {
+    name = name.toLowerCase();
+    if (type == 'income'){
+        try {
+            this.incomes.forEach(income => {
+                if (income.name == name){
+                    income.amount += amount;
+                    return this;
+                }
+            });
+            throw Error('Income type does not exist');
+        } catch (err) {
+            return err;
+        }
+    }
+    else if (type == 'expense'){
+        try {
+            this.expenses.forEach(expense => {
+                if (expense.name == name){
+                    expense.amount += amount;
+                    return this;
+                }
+            });
+            throw Error('Expense type does not exist');
+        } catch (err) {
+            return err;
+        }
+    }
+    return new Error('Invalid type');
 }
 
 userInfoSchema.pre('save', async function(next){
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
-    this.addIncomeOrExpense('Jobs', 'income');
-    this.addIncomeOrExpense('Bank', 'income');
-    this.addIncomeOrExpense('Entertainment', 'expense');
-    this.addIncomeOrExpense('Transport', 'expense');
+    this.addIncomeOrExpense('income', 'income');
+    this.addIncomeOrExpense('income', 'Bank');
+    this.addIncomeOrExpense('expense', 'Entertainment');
+    this.addIncomeOrExpense('expense', 'Transport');
     next();
 })
 
