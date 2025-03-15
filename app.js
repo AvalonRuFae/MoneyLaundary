@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');   
 const mongoose = require('mongoose');
-const routes = require('./routes/routes');
+const routes = require('./routes/authRoutes');
 const UserInfo = require('./models/UserInfo');
 const {requireAuth, getUser} = require('./middleware/authMiddleware');
 const cookieParser = require('cookie-parser');
