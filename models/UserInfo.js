@@ -3,7 +3,7 @@ const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
-const incomeSchema = new Schema({
+const income = new Schema({
     name: {
         type: String,
         required: true,
@@ -14,7 +14,7 @@ const incomeSchema = new Schema({
     }
 });
 
-const expenseSchema = new Schema({
+const expense = new Schema({
     name: {
         type: String,
         required: true,
@@ -42,15 +42,34 @@ const userInfoSchema = new Schema({
         type : String,
         required: [true, 'Please enter a password'],
     },
-    incomes: [incomeSchema],
-    expenses: [expenseSchema],
+    incomes: [income],
+    expenses: [expense],
 }, {timestamps: false});
 
 userInfoSchema.methods.addIncomeOrExpense = function (name, type) {
+    name = name.toLowerCase();
     if (type == 'income'){
-        this.incomes.push({name: name, amount: 0});
+        try {
+            this.incomes.forEach(income => {
+                if (income.name == name){
+                    throw Error('Income type already exists');
+                }
+            });
+            this.incomes.push({name: name, amount: 0});
+        } catch (err) {
+            return err;
+        }
     } else if (type == 'expense'){
-        this.expenses.push({name: name, amount: 0});
+        try {
+            this.expenses.forEach(expense => {
+                if (expense.name == name){
+                    throw Error('Expense type already exists');
+                }
+            });
+            this.expenses.push({name: name, amount: 0});
+        } catch (err) {
+            return err;
+        }
     } 
     return this;
 }
